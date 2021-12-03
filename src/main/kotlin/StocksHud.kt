@@ -23,7 +23,7 @@ internal object StocksHud: PluginLabelHud(
     private var url = "https://finnhub.io/api/v1/quote?symbol=$symbol&token=$token"
     private var stockData = StockData(0.0)
     private var price = 0.0
-    private var prevprice by Delegates.notNull<Double>()
+    private var prevprice = 0.0
     private var sentwarning = false
     private var color = secondaryColor
 
