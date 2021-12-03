@@ -19,7 +19,10 @@ internal object StocksHud: PluginLabelHud(
     private var url = "https://finnhub.io/api/v1/quote?symbol=$symbol&token=$token"
     private var stockData = StockData(0.0)
     private var price = 0.0
+    private var prevprice = 0.0
     private var sentwarning = false
+    private var color = secondaryColor
+
 
     override fun SafeClientEvent.updateText() {
         if (sentwarning == false) {
@@ -30,7 +33,24 @@ internal object StocksHud: PluginLabelHud(
             updateStockData()
         }
         displayText.add("Current Price of ${symbol.toUpperCase()} is", primaryColor)
-        displayText.add("$price", secondaryColor)
+        if (prevprice > price) {
+            color.r = 0
+            color.g = 255
+            color.b = 0
+            color.a = 255
+            displayText.add("$price", color)
+        } else {
+            color.r = 255
+            color.g = 0
+            color.b = 0
+            color.a = 255
+            displayText.add("$price", color)
+        }
+        if (ticktimer.tick(2)) {
+            displayText.add("$price", secondaryColor)
+            prevprice = price
+            color = secondaryColor
+        }
     }
 
     private fun updateStockData() {
