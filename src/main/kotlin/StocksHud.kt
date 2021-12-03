@@ -43,7 +43,11 @@ internal object StocksHud: PluginLabelHud(
                     MessageSendHelper.sendWarningMessage("[StockTicker] Token not accepted: $token")
                 }
             }
+            show()
         }
+    }
+
+    private fun show() {
         displayText.clear()
         displayText.add("Current Price of ${symbol.uppercase()} is", primaryColor)
         if (prevprice < price) {
@@ -65,8 +69,6 @@ internal object StocksHud: PluginLabelHud(
             prevprice = price
         }
     }
-
-
     private fun sendWarning() {
         MessageSendHelper.sendWarningMessage(
             "[StockTicker] This module uses an external API, finnhub.io, which requires an api token to use. " +
